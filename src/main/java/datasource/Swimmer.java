@@ -4,6 +4,7 @@ public class Swimmer {
     private String address;
     private String phoneNumber;
     private String mail;
+    private int age;
 
     public Swimmer(String name, String adress, String phonenumber, String mail) {
         this.name = name;
