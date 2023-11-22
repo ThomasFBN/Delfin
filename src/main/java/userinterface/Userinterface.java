@@ -14,7 +14,7 @@ public class Userinterface {
         controller.loadSwimmer();
         int menuValg = 0;
 
-        while (menuValg != 9) {
+        while (menuValg != 10) {
             System.out.println("Velkommen til svømmeklubben Delfinen!" +
                     "\nTast 1 for at oprette et medlem til klubben" +
                     "\nTast 2 for at søge efter et medlem i klubben." +
@@ -25,22 +25,28 @@ public class Userinterface {
                     "\nTast 7 for at få oversigt over manglende betalinger til kontigenter." +
                     "\nTast 8 for at få udmelde et given medlem." +
                     "\nTast 9 for at rette i et given medlems informationer." +
-                    "\nTast 10 for at afslutte")
+                    "\nTast 10 for at afslutte");
 
             menuValg = scanner.nextInt();
             scanner.nextLine();
-        }
 
-        switch (menuValg) {
-            case 1: {
-                createSwimmer();
+
+            switch (menuValg) {
+                case 1: {
+                    createSwimmer();
+                    break;
+                }
+                case 2: {
                 break;
-            }
-            case 2: {
 
-            }
-            default: {
+                }
+                case 10: {
+                    saveSwimmer();
+                    System.out.println("System exit");
+                }
+                default: {
 
+                }
             }
         }
     }
@@ -104,5 +110,10 @@ public class Userinterface {
 
             controller.addSwimmer(name, address, phonenumber, mail, birthday, isActive, isJunior, isCompetitor);
         }
+    public void saveSwimmer() {
+        controller.saveSwimmer();
     }
+
+}
+
 
