@@ -12,7 +12,7 @@ public class Swimmer {
     private boolean isJunior;
     private boolean isCompetitor;
 
-    public Swimmer(String name, String address, String phonenumber, String mail, LocalDate birthday, boolean isActive, boolean isJunior, boolean isMotionist) {
+    public Swimmer(String name, String address, String phonenumber, String mail, LocalDate birthday, boolean isActive, boolean isJunior, boolean isCompetitor) {
         this.name = name;
         this.address = address;
         this.phoneNumber = phonenumber;
