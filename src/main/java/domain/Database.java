@@ -33,10 +33,67 @@ public class Database {
             if (name.contains(søgeOrd.toLowerCase())) {
                 søgeResultat.add(swimmer);
             }
+
         }
         return søgeResultat;
 
 
+    }
+
+    public ArrayList<Swimmer> activeMembers() {
+        ArrayList<Swimmer> activeMembers = new ArrayList<>();
+        for (Swimmer swimmer : swimmerList) {
+            if (swimmer.getIsActive()) {
+                activeMembers.add(swimmer);
+            }
+        }
+        return activeMembers;
+    }
+    public ArrayList<Swimmer> passiveMembers() {
+        ArrayList<Swimmer> passiveMembers = new ArrayList<>();
+        for (Swimmer swimmer : swimmerList) {
+            if (!swimmer.getIsActive()) {
+                passiveMembers.add(swimmer);
+            }
+        }
+        return passiveMembers();
+    }
+    public ArrayList<Swimmer> juniorMembers() {
+        ArrayList<Swimmer> juniorMembers = new ArrayList<>();
+        for (Swimmer swimmer : swimmerList) {
+            if (swimmer.getIsJunior()) {
+                juniorMembers.add(swimmer);
+            }
+        }
+        return juniorMembers;
+    }
+
+    public ArrayList<Swimmer> seniorMembers() {
+        ArrayList<Swimmer> seniorMembers = new ArrayList<>();
+        for (Swimmer swimmer : swimmerList) {
+            if (!swimmer.getIsJunior()) {
+                seniorMembers.add(swimmer);
+            }
+        }
+        return seniorMembers;
+    }
+    public ArrayList<Swimmer> competitiveMembers() {
+        ArrayList<Swimmer> competitiveMembers = new ArrayList<>();
+        for (Swimmer swimmer : swimmerList) {
+            if (swimmer.getIsCompetitor()) {
+                competitiveMembers.add(swimmer);
+            }
+        }
+        return competitiveMembers;
+    }
+    public ArrayList<Swimmer> regularMembers() {
+        ArrayList<Swimmer> regularMembers = new ArrayList<>();
+        for (Swimmer swimmer : swimmerList) {
+            if (!swimmer.getIsCompetitor()) {
+                regularMembers.add(swimmer);
+            }
+        }
+        return regularMembers;
     }
 }
 

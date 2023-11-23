@@ -1,9 +1,11 @@
 package userinterface;
 
 import domain.Controller;
+import domain.Swimmer;
 
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Userinterface {
@@ -32,15 +34,19 @@ public class Userinterface {
             menuValg = scanner.nextInt();
             scanner.nextLine();
 
-
             switch (menuValg) {
                 case 1: {
                     createSwimmer();
                     break;
                 }
                 case 2: {
-                break;
+                    searchForSwimmer();
 
+                    break;
+                }
+                case 3: {
+                    handleSwimmerCategory();
+                    break;
                 }
                 case 10: {
                     saveSwimmer();
@@ -121,6 +127,139 @@ public class Userinterface {
     public void saveSwimmer() {
         controller.saveSwimmer();
     }
+
+    public void searchForSwimmer() {
+
+        System.out.println("Indtast navnet på medlemmet, du vil søge efter: ");
+        String swimmerName = scanner.nextLine();
+        ArrayList<Swimmer> søgeResultat = controller.search(swimmerName);
+
+        if (søgeResultat != null) {
+            System.out.println("medlemmet fundet:");
+            System.out.println(søgeResultat);
+        } else {
+            System.out.println("Medlemmet med navnet '" + swimmerName + "' blev ikke fundet.");
+        }
+
+    }
+
+    public void printActiveMembers() {
+        ArrayList<Swimmer> activeMembers = controller.activeSwimmers();
+
+        if (!activeMembers.isEmpty()) {
+            System.out.println("Aktive medlemmer:");
+            for (Swimmer swimmer : activeMembers) {
+                System.out.println(swimmer.toString());
+            }
+        } else {
+            System.out.println("Ingen aktive medlemmer fundet.");
+        }
+    }
+
+    public void printPassiveMembers() {
+        ArrayList<Swimmer> passiveMembers = controller.passiveSwimmers();
+
+        if (!passiveMembers.isEmpty()) {
+            System.out.println("Passive medlemmer:");
+            for (Swimmer swimmer : passiveMembers) {
+                System.out.println(swimmer.toString());
+            }
+        } else {
+            System.out.println("Ingen aktive medlemmer fundet.");
+        }
+    }
+
+    public void printjuniorMembers() {
+        ArrayList<Swimmer> juniorMembers = controller.juniorMembers();
+
+        if (!juniorMembers.isEmpty()) {
+            System.out.println("Junior medlemmer:");
+            for (Swimmer swimmer : juniorMembers) {
+                System.out.println(swimmer.toString());
+            }
+        } else {
+            System.out.println("Ingen junior medlemmer fundet.");
+        }
+    }
+
+    public void printSeniorMembers() {
+        ArrayList<Swimmer> seniorMembers = controller.seniorMembers();
+
+        if (!seniorMembers.isEmpty()) {
+            System.out.println("Senior medlemmer:");
+            for (Swimmer swimmer : seniorMembers) {
+                System.out.println(swimmer.toString());
+            }
+        } else {
+            System.out.println("Ingen Senior medlemmer fundet.");
+        }
+    }
+
+    public void printCompetetiveMembers() {
+        ArrayList<Swimmer> competitiveMembers = controller.competitiveMembers();
+
+        if (!competitiveMembers.isEmpty()) {
+            System.out.println("Konkurrence medlemmer:");
+            for (Swimmer swimmer : competitiveMembers) {
+                System.out.println(swimmer.toString());
+            }
+        } else {
+            System.out.println("Ingen competetive medlemmer fundet: ");
+        }
+    }
+
+    public void printRegularMembers() {
+        ArrayList<Swimmer> regularMember = controller.regularMembers();
+
+        if (!regularMember.isEmpty()) {
+            System.out.println("Regular medlemmer:");
+            for (Swimmer swimmer : regularMember) {
+                System.out.println(swimmer.toString());
+            }
+        } else {
+            System.out.println("Ingen regular medlemmer fundet.");
+        }
+    }
+
+    public void handleSwimmerCategory() {
+        int categoryChoice = 0;
+        do {
+            System.out.println("Vælg en kategori: " +
+                    "\n1. Aktive medlemmer" +
+                    "\n2. Passive medlemmer" +
+                    "\n3. Junior medlemmer" +
+                    "\n4. Senior medlemmer" +
+                    "\n5. Konkurrence medlemmer" +
+                    "\n6. Regular medlemmer" +
+                    "\nIndtast dit valg (1-6): ");
+
+            categoryChoice = scanner.nextInt();
+            scanner.nextLine();
+            switch (categoryChoice) {
+                case 1:
+                    printActiveMembers();
+                    break;
+                case 2:
+                    printPassiveMembers();
+                    break;
+                case 3:
+                    printjuniorMembers();
+                    break;
+                case 4:
+                    printSeniorMembers();
+                    break;
+                case 5:
+                    printCompetetiveMembers();
+                    break;
+                case 6:
+                    printRegularMembers();
+                    break;
+                default:
+                    System.out.println("Ugyldigt valg.");
+                    break;
+            }
+        } while (categoryChoice < 1 || categoryChoice > 6);
+
 
     }
 }

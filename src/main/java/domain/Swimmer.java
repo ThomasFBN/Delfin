@@ -40,11 +40,11 @@ public class Swimmer {
     public String getMail() {
         return mail;
     }
-    
+
     public LocalDate getBirthday() {
         return birthday;
     }
-    
+
     public boolean getIsActive() {
         return isActive;
     }
@@ -91,5 +91,6 @@ public class Swimmer {
                 "Er medlemmet junior/senior svømmer: " + isJunior + "\n" +
                 "Er medlemmet motionist/konkurrence svømmer: " + isCompetitor;
 
+    }
 }
 
