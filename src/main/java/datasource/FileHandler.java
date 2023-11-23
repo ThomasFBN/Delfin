@@ -26,12 +26,13 @@ public class FileHandler {
             throw new RuntimeException(e);
         }
         for (Swimmer swimmer : swimmerList) {
-            output.println(swimmer.getName() +
-                    swimmer.getAddress() +
-                    swimmer.getPhoneNumber() +
-                    swimmer.getMail() + swimmer.getBirthday() +
-                    swimmer.getIsActive()+
-                    swimmer.getIsJunior()+
+            output.println(swimmer.getName() + ";" +
+                    swimmer.getAddress() + ";"+
+                    swimmer.getPhoneNumber() + ";" +
+                    swimmer.getMail() + ";" +
+                    swimmer.getBirthday() + ";" +
+                    swimmer.getIsActive()+ ";" +
+                    swimmer.getIsJunior()+ ";" +
                     swimmer.getIsCompetitor());
 
 

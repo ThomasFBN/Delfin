@@ -1,9 +1,11 @@
 package userinterface;
+
 import domain.Controller;
 
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.Scanner;
+
 public class Userinterface {
     Controller controller;
     Scanner scanner;
@@ -50,70 +52,78 @@ public class Userinterface {
             }
         }
     }
-        public void createSwimmer() {
-            System.out.println("Indtast navnet på det medlem du vil oprette: ");
-            String name = scanner.nextLine();
-            System.out.println("Indtast adressen");
-            String address = scanner.nextLine();
-            System.out.println("Indtast telefon nummer");
-            String phonenumber = scanner.nextLine();
-            System.out.println("Indtast mail");
-            String mail = scanner.next();
-            System.out.println("Indtast fødselsdagdato");
-            LocalDate birthday = LocalDate.parse(scanner.nextLine());
-            boolean isActive = true;
-            char medlem;
-            do {
-                System.out.println("Er medlemmet aktivt (j/n): ");
 
-                medlem = scanner.next().charAt(0);
+    public void createSwimmer() {
+        System.out.println("Indtast navnet på det medlem du vil oprette: ");
+        String name = scanner.nextLine();
+        System.out.println("Indtast adressen");
+        String address = scanner.nextLine();
+        System.out.println("Indtast telefon nummer");
+        String phonenumber = scanner.nextLine();
+        System.out.println("Indtast mail");
+        String mail = scanner.nextLine();
+        System.out.println("Indtast fødselsdagdato i formatet DD-MM-ÅÅÅÅ :");
+        String birthdayInput = scanner.nextLine();
 
-                if (medlem == 'j') {
-                    isActive = true;
-                } else if (medlem == 'n') {
-                    isActive = false;
-                } else {
-                    System.out.println("Ugyldigt input, indtast j/n");
-                }
-            } while (medlem != 'j' && medlem != 'n');
-            boolean isJunior = true;
-            do {
-                System.out.println("Er medlemmet Junior (j/n): ");
+        String[] parts = birthdayInput.split("-");
+        int day = Integer.parseInt(parts[0]);
+        int month = Integer.parseInt(parts[1]);
+        int year = Integer.parseInt(parts[2]);
+        LocalDate birthday = LocalDate.of(year, month, day);
+        boolean isActive = true;
+        char medlem;
+        do {
+            System.out.println("Er medlemmet aktivt (j/n): ");
 
-                medlem = scanner.next().charAt(0);
+            medlem = scanner.next().charAt(0);
 
-                if (medlem == 'j') {
-                    isJunior = true;
-                } else if (medlem == 'n') {
-                    isJunior = false;
-                } else {
-                    System.out.println("Ugyldigt input, indtast j/n");
-                }
-            } while (medlem != 'j' && medlem != 'n');
-            boolean isCompetitor = true;
-            do {
-                System.out.println("Er medlemmet konkurrence svømmer (j/n): ");
+            if (medlem == 'j') {
+                isActive = true;
+            } else if (medlem == 'n') {
+                isActive = false;
+            } else {
+                System.out.println("Ugyldigt input, indtast j/n");
+            }
+        } while (medlem != 'j' && medlem != 'n');
+        boolean isJunior = true;
+        do {
+            System.out.println("Er medlemmet Junior (j/n): ");
 
-                medlem = scanner.next().charAt(0);
+            medlem = scanner.next().charAt(0);
 
-                if (medlem == 'j') {
-                    isCompetitor = true;
-                } else if (medlem == 'n') {
-                    isCompetitor = false;
-                } else {
-                    System.out.println("Ugyldigt input, indtast j/n");
-                }
-            } while (medlem != 'j' && medlem != 'n');
-           
+            if (medlem == 'j') {
+                isJunior = true;
+            } else if (medlem == 'n') {
+                isJunior = false;
+            } else {
+                System.out.println("Ugyldigt input, indtast j/n");
+            }
+        } while (medlem != 'j' && medlem != 'n');
+        boolean isCompetitor = true;
+        do {
+            System.out.println("Er medlemmet konkurrence svømmer (j/n): ");
+
+            medlem = scanner.next().charAt(0);
+
+            if (medlem == 'j') {
+                isCompetitor = true;
+            } else if (medlem == 'n') {
+                isCompetitor = false;
+            } else {
+                System.out.println("Ugyldigt input, indtast j/n");
+            }
+        } while (medlem != 'j' && medlem != 'n');
 
 
+        controller.addSwimmer(name, address, phonenumber, mail, birthday, isActive, isJunior, isCompetitor);
+    }
 
-            controller.addSwimmer(name, address, phonenumber, mail, birthday, isActive, isJunior, isCompetitor);
-        }
     public void saveSwimmer() {
         controller.saveSwimmer();
     }
 
+    }
 }
+
 
 
