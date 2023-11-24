@@ -26,27 +26,43 @@ public class Controller {
         return database.search(søgeord);
 
     }
-    public ArrayList activeSwimmers(){
+
+    public ArrayList activeSwimmers() {
         return database.activeMembers();
     }
-    public ArrayList passiveSwimmers(){
+
+    public ArrayList passiveSwimmers() {
         return database.passiveMembers();
     }
-    public ArrayList juniorMembers(){
+
+    public ArrayList juniorMembers() {
         return database.juniorMembers();
     }
-    public ArrayList seniorMembers(){
+
+    public ArrayList seniorMembers() {
         return database.seniorMembers();
     }
-    public ArrayList competitiveMembers(){
+
+    public ArrayList competitiveMembers() {
         return database.competitiveMembers();
     }
-    public ArrayList regularMembers(){
+
+    public ArrayList regularMembers() {
         return database.regularMembers();
     }
 
 
     public void addSwimmer(String name, String address, String phonenumber, String mail, LocalDate birthday, boolean isActive, boolean isJunior, boolean isCompetitor) {
         database.createSwimmer(name, address, phonenumber, mail, birthday, isActive, isJunior, isCompetitor);
+    }
+
+    public double calculateExpectedMembershipFeesForAll() {
+        double totalExpectedFees = 0.0;
+
+        for (Swimmer swimmer : database.getSwimmerList()) {
+            totalExpectedFees += swimmer.calculateExpectedMembershipFees();
+        }
+
+        return totalExpectedFees;
     }
 }

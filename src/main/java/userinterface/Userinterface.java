@@ -262,6 +262,12 @@ public class Userinterface {
 
 
     }
+
+    public void calculateExpectedMembershipFeesForAll() {
+        double totalExpectedFees = controller.calculateExpectedMembershipFeesForAll();
+        System.out.println("Den samlede forventede indbetaling for alle medlemmer er: " + totalExpectedFees);
+
+    }
 }
 
 
