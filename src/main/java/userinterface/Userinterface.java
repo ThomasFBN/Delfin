@@ -48,6 +48,10 @@ public class Userinterface {
                     handleSwimmerCategory();
                     break;
                 }
+                case 6: {
+                    calculateExpectedMembershipFeesForAll();
+                    break;
+                }
                 case 10: {
                     saveSwimmer();
                     System.out.println("System exit");
@@ -259,7 +263,11 @@ public class Userinterface {
                     break;
             }
         } while (categoryChoice < 1 || categoryChoice > 6);
+    }
 
+    public void calculateExpectedMembershipFeesForAll() {
+        double totalExpectedFees = controller.calculateExpectedMembershipFeesForAll();
+        System.out.println("Den samlede forventede indbetaling for alle medlemmer er: " + totalExpectedFees);
 
     }
 }

@@ -25,6 +25,9 @@ public class Database {
     public void loadSwimmer() {
         swimmerList = filehandler.loadSwimmer();
     }
+    public ArrayList<Swimmer> getSwimmerList() {
+        return swimmerList;
+    }
 
     public ArrayList<Swimmer> search(String søgeOrd) {
         ArrayList<Swimmer> søgeResultat = new ArrayList<>();
@@ -95,6 +98,7 @@ public class Database {
         }
         return regularMembers;
     }
+
 }
 
 

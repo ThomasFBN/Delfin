@@ -1,6 +1,7 @@
 package domain;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 public class Swimmer {
     private String name;
@@ -19,7 +20,7 @@ public class Swimmer {
         this.phoneNumber = phonenumber;
         this.mail = mail;
         this.birthday = birthday;
-        this.isActive = true;
+        this.isActive = isActive;
         this.isJunior = isJunior;
         this.isCompetitor = isCompetitor;
         this.kontingent = kontingent;
@@ -61,24 +62,6 @@ public class Swimmer {
         return kontingent;
     }
 
-    private double beregnKontingent() {
-        if ("Aktiv".equals(isActive)) {
-            if ("Junior".equals(birthday)) {
-                return 1000.0;  // Kontingent for ungdomssvømmere (under 18 år)
-            } else if ("Senior".equals(birthday)) {
-                if ("Motionist".equals(isCompetitor)) {
-                    return 1600.0;  // Kontingent for seniorsvømmere (18 år og over) - motionist
-                } else {
-                    return 1600.0 * 0.75;  // Rabat på 25% for seniorsvømmere (18 år og over) - konkurrencesvømmer
-                }
-            }
-        } else if ("Passiv".equals(isActive)) {
-            return 500.0;  // Kontingent for passivt medlemskab
-        }
-
-        return 0.0;  // Returnerer 0.0 for ukendt aktivitet/aldersgruppe
-    }
-
 
     public String toString() {
         return "Medlem: " + "\n" +
@@ -92,5 +75,23 @@ public class Swimmer {
                 "Er medlemmet motionist/konkurrence svømmer: " + isCompetitor;
 
     }
+
+    public double calculateExpectedMembershipFees() {
+        LocalDate currentDate = LocalDate.now();
+        int age = Period.between(birthday, currentDate).getYears();
+
+        if (isActive) {
+            if (age < 18) {
+                return 1000.0;  // Kontingent for ungdomssvømmere (under 18 år)
+            } else if (age >= 60) {
+                return 1600.0 * 0.75;  // Rabat på 25% for seniorsvømmere (60 år og derover)
+            } else {
+                return 1600.0;  // Kontingent for seniorsvømmere (18 år og derover)
+            }
+        } else {
+            return 500.0;  // Kontingent for passivt medlemskab
+        }
+    }
+
 }
 
