@@ -1,6 +1,7 @@
 package domain;
 
-import org.w3c.dom.events.Event;
+
+import jdk.jfr.Event;
 
 import java.time.LocalDate;
 
@@ -37,4 +38,5 @@ public class SwimTime {
     public String getPlacement() {
         return placement;
     }
+
 }

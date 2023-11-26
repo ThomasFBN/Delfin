@@ -1,22 +1,29 @@
 package domain;
 
 import datasource.FileHandler;
+import jdk.jfr.Event;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Database {
     private ArrayList<Swimmer> swimmerList;
+    public ArrayList<SwimTime> swimTimelist;
     private FileHandler filehandler = new FileHandler("SwimmerMembers.csv");
 
     public Database() {
         swimmerList = new ArrayList<>();
+        swimTimelist = new ArrayList<>();
     }
 
     public void createSwimmer(String name, String address, String phonenumber, String mail, LocalDate birthday, boolean isActive, boolean isJunior, boolean isCompetitor) {
         swimmerList.add(new Swimmer(name, address, phonenumber, mail, birthday, isActive, isJunior, isCompetitor));
 
     }
+    public void createSwimTime(Double time, String member, LocalDate date, Event event,String placement){
+        swimTimelist.add(new SwimTime(time, member, date, event, placement));
+    }
+
 
     public void saveSwimmer() {
         filehandler.saveSwimmer(swimmerList);
@@ -27,6 +34,9 @@ public class Database {
     }
     public ArrayList<Swimmer> getSwimmerList() {
         return swimmerList;
+    }
+    public ArrayList<SwimTime> getSwimTimelist(){
+        return swimTimelist;
     }
 
     public ArrayList<Swimmer> search(String søgeOrd) {
