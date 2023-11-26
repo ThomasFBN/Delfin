@@ -8,12 +8,14 @@ import java.util.ArrayList;
 
 public class Database {
     private ArrayList<Swimmer> swimmerList;
-    public ArrayList<SwimTime> swimTimelist;
+    public ArrayList<SwimTime> swimTimeList;
+    public ArrayList<Events> eventsList;
     private FileHandler filehandler = new FileHandler("SwimmerMembers.csv");
 
     public Database() {
         swimmerList = new ArrayList<>();
-        swimTimelist = new ArrayList<>();
+        swimTimeList = new ArrayList<>();
+        eventsList = new ArrayList<>();
     }
 
     public void createSwimmer(String name, String address, String phonenumber, String mail, LocalDate birthday, boolean isActive, boolean isJunior, boolean isCompetitor) {
@@ -21,7 +23,7 @@ public class Database {
 
     }
     public void createSwimTime(Double time, String member, LocalDate date, Event event,String placement){
-        swimTimelist.add(new SwimTime(time, member, date, event, placement));
+        swimTimeList.add(new SwimTime(time, member, date, event, placement));
     }
 
 
@@ -36,7 +38,7 @@ public class Database {
         return swimmerList;
     }
     public ArrayList<SwimTime> getSwimTimelist(){
-        return swimTimelist;
+        return swimTimeList;
     }
 
     public ArrayList<Swimmer> search(String søgeOrd) {
