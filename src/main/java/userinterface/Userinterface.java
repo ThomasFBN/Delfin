@@ -1,6 +1,8 @@
 package userinterface;
 
 import domain.Controller;
+import domain.Disciplin;
+import domain.Event;
 import domain.Swimmer;
 
 import java.io.FileNotFoundException;
@@ -16,6 +18,7 @@ public class Userinterface {
         scanner = new Scanner(System.in);
         controller = new Controller();
         controller.loadSwimmer();
+        controller.loadSwimTime();
         int menuValg = 0;
 
         while (menuValg != 10) {
@@ -46,6 +49,10 @@ public class Userinterface {
                 }
                 case 3: {
                     handleSwimmerCategory();
+                    break;
+                }
+                case 4: {
+                    createSwimTime();
                     break;
                 }
                 case 6: {
@@ -127,6 +134,29 @@ public class Userinterface {
 
 
         controller.addSwimmer(name, address, phonenumber, mail, birthday, isActive, isJunior, isCompetitor);
+    }
+    public void createSwimTime(){
+        System.out.println("Indtast medlemmet: ");
+        String member = scanner.nextLine();
+        System.out.println("Indtast medlemmets tid: ");
+        double time = scanner.nextDouble();
+        scanner.nextLine();
+        System.out.println("Indtast datoen: ");
+        String dateInput = scanner.nextLine();
+        String[] parts = dateInput.split("-");
+        int day = Integer.parseInt(parts[0]);
+        int month = Integer.parseInt(parts[1]);
+        int year = Integer.parseInt(parts[2]);
+        LocalDate date = LocalDate.of(year, month, day);
+        System.out.println("Indtast event");
+        Event event = Event.valueOf(scanner.nextLine());
+        System.out.println("Indtast disciplin");
+        Disciplin disciplin = Disciplin.valueOf(scanner.nextLine());
+        System.out.println("Indtast placering");
+        String placement = scanner.nextLine();
+
+        controller.addSwimTime(member, time, date, event, disciplin, placement);
+
     }
 
     public void saveSwimmer() {

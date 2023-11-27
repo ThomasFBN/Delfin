@@ -1,7 +1,6 @@
 package domain;
 
 
-
 import java.time.LocalDate;
 
 public class SwimTime {
@@ -20,6 +19,7 @@ public class SwimTime {
         this.disciplin = disciplin;
         this.placement = placement;
     }
+
 
     public double getTime() {
         return time;

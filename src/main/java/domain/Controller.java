@@ -16,8 +16,16 @@ public class Controller {
         database.saveSwimmer();
     }
 
+    public void saveSwimTime() {
+        database.saveSwimTime();
+    }
+
     public void loadSwimmer() throws FileNotFoundException {
         database.loadSwimmer();
+    }
+
+    public void loadSwimTime() throws FileNotFoundException {
+        database.loadSwimmerTime();
     }
 
     public ArrayList<Swimmer> search(String søgeord) {

@@ -10,6 +10,7 @@ public class Database {
     public ArrayList<SwimTime> swimTimeList;
     public ArrayList<Disciplin> disciplinList;
     private FileHandler filehandler = new FileHandler("SwimmerMembers.csv");
+    private FileHandler filehandler2 = new FileHandler("SwimmerTimes.csv");
 
     public Database() {
         swimmerList = new ArrayList<>();
