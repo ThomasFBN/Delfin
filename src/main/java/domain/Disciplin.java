@@ -1,6 +1,6 @@
 package domain;
 
-public enum Events {
+public enum Disciplin {
     CRAWL100M,
     BRYST100M,
     RYGCRAWL100M,

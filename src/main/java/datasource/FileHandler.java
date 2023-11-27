@@ -1,5 +1,8 @@
 package datasource;
 
+import domain.Disciplin;
+import domain.Event;
+import domain.SwimTime;
 import domain.Swimmer;
 
 import java.io.File;
@@ -75,6 +78,61 @@ public class FileHandler {
         sc.close();
         return swimmerData;
     }
+
+
+    public void saveSwimTime(ArrayList<SwimTime> swimTimeList) {
+        PrintStream output = null;
+        try {
+            output = new PrintStream(file);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        for (SwimTime swimtime : swimTimeList) {
+            output.println(swimtime.getMember() + ";" +
+                    swimtime.getTime() + ";"+
+                    swimtime.getDate() + ";" +
+                    swimtime.getEvent() + ";" +
+                    swimtime.getDisciplin() + ";" +
+                    swimtime.getPlacement());
+
+        }
+
+
+        System.out.println("List saved");
+    }
+
+    public ArrayList<SwimTime> loadSwimTime() {
+        ArrayList<SwimTime> swimTimeData = new ArrayList<>();
+        Scanner sc = null;
+        try {
+            sc = new Scanner(file, StandardCharsets.ISO_8859_1);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            String[] attributes = line.split(";");
+
+            String member = attributes[0].trim();
+            double time = Double.parseDouble(attributes[1]);
+            LocalDate date = LocalDate.parse(attributes[2]);
+            Event event = Event.valueOf(attributes[3]);
+            Disciplin disciplin = Disciplin.valueOf(attributes[4]);
+            String placement =attributes[5].trim();
+
+
+
+            SwimTime swimTime = new SwimTime(member,time, date, event, disciplin, placement);
+            swimTimeData.add(swimTime);
+
+        }
+        sc.close();
+        return swimTimeData;
+    }
+
 
 }
 

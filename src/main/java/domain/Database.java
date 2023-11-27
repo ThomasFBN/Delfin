@@ -1,7 +1,6 @@
 package domain;
 
 import datasource.FileHandler;
-import jdk.jfr.Event;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -9,21 +8,21 @@ import java.util.ArrayList;
 public class Database {
     private ArrayList<Swimmer> swimmerList;
     public ArrayList<SwimTime> swimTimeList;
-    public ArrayList<Events> eventsList;
+    public ArrayList<Disciplin> disciplinList;
     private FileHandler filehandler = new FileHandler("SwimmerMembers.csv");
 
     public Database() {
         swimmerList = new ArrayList<>();
         swimTimeList = new ArrayList<>();
-        eventsList = new ArrayList<>();
+        disciplinList = new ArrayList<>();
     }
 
     public void createSwimmer(String name, String address, String phonenumber, String mail, LocalDate birthday, boolean isActive, boolean isJunior, boolean isCompetitor) {
         swimmerList.add(new Swimmer(name, address, phonenumber, mail, birthday, isActive, isJunior, isCompetitor));
 
     }
-    public void createSwimTime(Double time, String member, LocalDate date, Event event,String placement){
-        swimTimeList.add(new SwimTime(time, member, date, event, placement));
+    public void createSwimTime(String member, Double time, LocalDate date, Event event, Disciplin disciplin, String placement){
+        swimTimeList.add(new SwimTime(member,time, date, event, disciplin, placement));
     }
 
 
@@ -109,6 +108,13 @@ public class Database {
             }
         }
         return regularMembers;
+    }
+    public void saveSwimTime() {
+        filehandler2.saveSwimTime(swimTimeList);
+    }
+
+    public void loadSwimmerTime() {
+        swimTimeList = filehandler2.loadSwimTime();
     }
 
 }

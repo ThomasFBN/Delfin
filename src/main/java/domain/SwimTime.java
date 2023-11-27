@@ -1,7 +1,6 @@
 package domain;
 
 
-import jdk.jfr.Event;
 
 import java.time.LocalDate;
 
@@ -10,13 +9,15 @@ public class SwimTime {
     private String member;
     private LocalDate date;
     private Event event;
+    private Disciplin disciplin;
     private String placement;
 
-    public SwimTime(double time, String member, LocalDate date, Event event, String placement){
+    public SwimTime(String member, double time, LocalDate date, Event event, Disciplin disciplin, String placement){
         this.time = time;
         this.member = member;
         this.date = date;
         this.event = event;
+        this.disciplin = disciplin;
         this.placement = placement;
     }
 
@@ -27,12 +28,15 @@ public class SwimTime {
         return member;
     }
 
-    public Event getEvent() {
-        return event;
+    public Disciplin getDisciplin() {
+        return disciplin;
     }
 
     public LocalDate getDate() {
         return date;
+    }
+    public Event getEvent() {
+        return event;
     }
 
     public String getPlacement() {

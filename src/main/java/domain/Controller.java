@@ -1,8 +1,5 @@
 package domain;
 
-import datasource.FileHandler;
-import jdk.jfr.Event;
-
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -56,8 +53,9 @@ public class Controller {
     public void addSwimmer(String name, String address, String phonenumber, String mail, LocalDate birthday, boolean isActive, boolean isJunior, boolean isCompetitor) {
         database.createSwimmer(name, address, phonenumber, mail, birthday, isActive, isJunior, isCompetitor);
     }
-    public void addSwimTime(Double time, String member, LocalDate date, Event event, String placement){
-        database.createSwimTime(time, member, date, event, placement);
+
+    public void addSwimTime(String member, Double time, LocalDate date, Event event, Disciplin disciplin, String placement) {
+        database.createSwimTime(member, time, date, event, disciplin, placement);
     }
 
     public double calculateExpectedMembershipFeesForAll() {

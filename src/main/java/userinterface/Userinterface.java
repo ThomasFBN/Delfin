@@ -54,6 +54,7 @@ public class Userinterface {
                 }
                 case 10: {
                     saveSwimmer();
+                    saveSwimTime();
                     System.out.println("System exit");
                 }
                 default: {
@@ -130,6 +131,10 @@ public class Userinterface {
 
     public void saveSwimmer() {
         controller.saveSwimmer();
+    }
+    
+    public void saveSwimTime(){
+        controller.saveSwimTime();
     }
 
     public void searchForSwimmer() {
