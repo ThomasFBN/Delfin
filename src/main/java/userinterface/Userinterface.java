@@ -61,6 +61,14 @@ public class Userinterface {
                     calculateExpectedMembershipFeesForAll();
                     break;
                 }
+                case 8:{
+                    deleteSwimmer();
+                    break;
+                }
+                case 9: {
+                    editMember();
+                    break;
+                }
                 case 10: {
                     saveSwimmer();
                     saveSwimTime();
@@ -82,14 +90,8 @@ public class Userinterface {
         String phonenumber = scanner.nextLine();
         System.out.println("Indtast mail");
         String mail = scanner.nextLine();
-        System.out.println("Indtast fødselsdagdato i formatet DD-MM-ÅÅÅÅ :");
-        String birthdayInput = scanner.nextLine();
-
-        String[] parts = birthdayInput.split("-");
-        int day = Integer.parseInt(parts[0]);
-        int month = Integer.parseInt(parts[1]);
-        int year = Integer.parseInt(parts[2]);
-        LocalDate birthday = LocalDate.of(year, month, day);
+        System.out.println("Indtast fødselsdagdato i formatet DD-MM-ÅÅÅÅ:");
+        LocalDate birthday = validBirthdayInput();
         boolean isActive = true;
         char medlem;
         do {
@@ -133,20 +135,28 @@ public class Userinterface {
         double time = scanner.nextDouble();
         scanner.nextLine();
         System.out.println("Indtast datoen: ");
-        String dateInput = scanner.nextLine();
-        String[] parts = dateInput.split("-");
-        int day = Integer.parseInt(parts[0]);
-        int month = Integer.parseInt(parts[1]);
-        int year = Integer.parseInt(parts[2]);
-        LocalDate date = LocalDate.of(year, month, day);
-        System.out.println("Indtast event");
-        Event event = Event.valueOf(scanner.nextLine());
-        System.out.println("Indtast disciplin");
-        Disciplin disciplin = Disciplin.valueOf(scanner.nextLine());
+        LocalDate date = validBirthdayInput();
+        boolean competition = true;
+        String tid;
+        do {
+            System.out.println("Er tiden til konkurrence eller træning?");
+            tid = scanner.nextLine().toLowerCase();
+
+            if (tid.equals("konkurrence")) {
+                competition = true;
+            } else if (tid.equals("træning")) {
+                competition = false;
+            } else {
+                System.out.println("Ugyldigt input, indtast konkurrence eller træning");
+            }
+        } while (!tid.equals("konkurrence") && !tid.equals("træning"));
+
+
+        Disciplin disciplin = getValidDiscipline();
         System.out.println("Indtast placering");
         String placement = scanner.nextLine();
 
-        controller.addSwimTime(member, time, date, event, disciplin, placement);
+        controller.addSwimTime(member, time, date, competition, disciplin, placement);
 
 
     }

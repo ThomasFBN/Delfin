@@ -42,6 +42,46 @@ public class Swimmer {
         return address;
     }
 
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setCompetitor(boolean competitor) {
+        isCompetitor = competitor;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setJunior(boolean junior) {
+        isJunior = junior;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setHasPaid(boolean hasPaid) {
+        this.hasPaid = hasPaid;
+    }
+
+    public void setKontingent(double kontingent) {
+        this.kontingent = kontingent;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
