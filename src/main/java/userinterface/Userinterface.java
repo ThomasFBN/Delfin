@@ -2,11 +2,13 @@ package userinterface;
 
 import domain.Controller;
 import domain.Disciplin;
-import domain.Event;
 import domain.Swimmer;
 
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -25,8 +27,8 @@ public class Userinterface {
             System.out.println("Velkommen til svømmeklubben Delfinen!" +
                     "\nTast 1 for at oprette et medlem til klubben" +
                     "\nTast 2 for at søge efter et medlem i klubben." +
-                    "\nTast 3 for at se resultater over konkurrence resultater." +
-                    "\nTast 4 for at se resultater over trænings resultater." +
+                    "\nTast 3 for at se oversigt over medlemmere." +
+                    "\nTast 4 for at oprette nye træning/konkurrence resultater" +
                     "\nTast 5 for at få oversigt over top 5 svømmere i hver svømmedisciplin." +
                     "\nTast 6 for at få oversigt over forventede indbetalte kontigenter på et år." +
                     "\nTast 7 for at få oversigt over manglende betalinger til kontigenter." +
@@ -103,20 +105,8 @@ public class Userinterface {
                 System.out.println("Ugyldigt input, indtast j/n");
             }
         } while (medlem != 'j' && medlem != 'n');
-        boolean isJunior = true;
-        do {
-            System.out.println("Er medlemmet Junior (j/n): ");
+        boolean isJunior = calculateIsJunior(birthday);
 
-            medlem = scanner.next().charAt(0);
-
-            if (medlem == 'j') {
-                isJunior = true;
-            } else if (medlem == 'n') {
-                isJunior = false;
-            } else {
-                System.out.println("Ugyldigt input, indtast j/n");
-            }
-        } while (medlem != 'j' && medlem != 'n');
         boolean isCompetitor = true;
         do {
             System.out.println("Er medlemmet konkurrence svømmer (j/n): ");
@@ -135,7 +125,8 @@ public class Userinterface {
 
         controller.addSwimmer(name, address, phonenumber, mail, birthday, isActive, isJunior, isCompetitor);
     }
-    public void createSwimTime(){
+
+    public void createSwimTime() {
         System.out.println("Indtast medlemmet: ");
         String member = scanner.nextLine();
         System.out.println("Indtast medlemmets tid: ");
@@ -157,13 +148,14 @@ public class Userinterface {
 
         controller.addSwimTime(member, time, date, event, disciplin, placement);
 
+
     }
 
     public void saveSwimmer() {
         controller.saveSwimmer();
     }
-    
-    public void saveSwimTime(){
+
+    public void saveSwimTime() {
         controller.saveSwimTime();
     }
 
@@ -180,6 +172,19 @@ public class Userinterface {
             System.out.println("Medlemmet med navnet '" + swimmerName + "' blev ikke fundet.");
         }
 
+    }
+
+    public void printAllMembers() {
+        ArrayList<Swimmer> allSwimmers = controller.allSwimmers();
+
+        if (!allSwimmers.isEmpty()) {
+            System.out.println("Alle medlemmer:");
+            for (Swimmer swimmer : allSwimmers) {
+                System.out.println(swimmer.toString());
+            }
+        } else {
+            System.out.println("Ingen medlemmer fundet.");
+        }
     }
 
     public void printActiveMembers() {
@@ -260,52 +265,191 @@ public class Userinterface {
         }
     }
 
+    public void missingPaymentMembers() {
+        ArrayList<Swimmer> missingPaymentMembers = controller.missingPaymentMembers();
+
+        if (!missingPaymentMembers.isEmpty()) {
+            System.out.println("Medlemmere som ikke har betalt:");
+            for (Swimmer swimmer : missingPaymentMembers) {
+                System.out.println(swimmer.toString());
+            }
+        } else {
+            System.out.println("Ingen medlemmer fundet.");
+        }
+    }
+
+    public void sortSwimmers() {
+        controller.sortSwimmers();
+    }
+
+    public boolean calculateIsJunior(LocalDate birthday) {
+        LocalDate currentDate = LocalDate.now();
+        int age = Period.between(birthday, currentDate).getYears();
+        return age < 18;
+    }
+
     public void handleSwimmerCategory() {
         int categoryChoice = 0;
         do {
             System.out.println("Vælg en kategori: " +
-                    "\n1. Aktive medlemmer" +
-                    "\n2. Passive medlemmer" +
-                    "\n3. Junior medlemmer" +
-                    "\n4. Senior medlemmer" +
-                    "\n5. Konkurrence medlemmer" +
-                    "\n6. Regular medlemmer" +
-                    "\nIndtast dit valg (1-6): ");
+                    "\n1. Alle medlemmer" +
+                    "\n2. Alle medlemmer sorteret efter navn" +
+                    "\n3. Alle medlemmer som ikke har betalt" +
+                    "\n4. Aktive medlemmer" +
+                    "\n5. Passive medlemmer" +
+                    "\n6. Junior medlemmer" +
+                    "\n7. Senior medlemmer" +
+                    "\n8. Konkurrence medlemmer" +
+                    "\n9. Regular medlemmer" +
+                    "\nIndtast dit valg (1-9): ");
 
             categoryChoice = scanner.nextInt();
             scanner.nextLine();
             switch (categoryChoice) {
                 case 1:
-                    printActiveMembers();
+                    printAllMembers();
                     break;
                 case 2:
-                    printPassiveMembers();
+                    sortSwimmers();
+                    printAllMembers();
                     break;
                 case 3:
-                    printjuniorMembers();
+                    missingPaymentMembers();
                     break;
                 case 4:
-                    printSeniorMembers();
+                    printActiveMembers();
                     break;
                 case 5:
-                    printCompetetiveMembers();
+                    printPassiveMembers();
                     break;
                 case 6:
+                    printjuniorMembers();
+                    break;
+                case 7:
+                    printSeniorMembers();
+                    break;
+                case 8:
+                    printCompetetiveMembers();
+                    break;
+                case 9:
                     printRegularMembers();
                     break;
                 default:
                     System.out.println("Ugyldigt valg.");
                     break;
             }
-        } while (categoryChoice < 1 || categoryChoice > 6);
+        } while (categoryChoice < 1 || categoryChoice > 9);
+    }
+
+    public LocalDate validBirthdayInput() {
+        LocalDate localDate = null;
+        boolean validInput = false;
+
+        do {
+            String input = scanner.nextLine();
+
+            try {
+                // Forsøger at parse inputtet til en LocalDate
+                localDate = LocalDate.parse(input, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                validInput = true; // Hvis parsingen lykkes, er inputtet gyldigt
+            } catch (DateTimeParseException e) {
+                System.out.println("Ugyldigt format. Indtast datoen i formatet DD-MM-ÅÅÅÅ.");
+            }
+        } while (!validInput);
+
+        return localDate;
+    }
+
+    public Disciplin getValidDiscipline() {
+        Disciplin selectedDiscipline = null;
+        boolean validDiscipline = false;
+        do {
+            System.out.println("Indtast disciplin:");
+            String disciplineInput = scanner.nextLine();
+            try {
+                selectedDiscipline = Disciplin.valueOf(disciplineInput.toUpperCase());
+                validDiscipline = true;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Ugyldig disciplin. Vælg venligst en gyldig disciplin fra listen.");
+            }
+        } while (!validDiscipline);
+        return selectedDiscipline;
+    }
+    public void editMember() {
+        System.out.println("Indtast navnet på medlemmet, du vil redigere: ");
+        String memberName = scanner.nextLine();
+        ArrayList<Swimmer> searchResult = controller.search(memberName);
+
+        if (!searchResult.isEmpty()) {
+            Swimmer swimmer = searchResult.get(0);
+
+            System.out.println("Medlem fundet:");
+            System.out.println(swimmer);
+            System.out.println("Indtast nye oplysninger for medlemmet:");
+
+            System.out.println("Indtast nyt navn: ");
+            String newName = scanner.nextLine();
+            System.out.println("Indtast ny adresse: ");
+            String newAddress = scanner.nextLine();
+            System.out.println("Indtast nyt telefonnummer: ");
+            String newPhoneNumber = scanner.nextLine();
+            System.out.println("Indtast ny e-mail: ");
+            String newMail = scanner.nextLine();
+            System.out.println("Indtast ny fødselsdag (DD-MM-ÅÅÅÅ): ");
+            LocalDate newBirthday = validBirthdayInput();
+
+            boolean newIsActive = true;
+            char isActiveInput;
+            do {
+                System.out.println("Er medlemmet aktivt (j/n): ");
+                isActiveInput = scanner.next().charAt(0);
+
+                if (isActiveInput == 'j') {
+                    newIsActive = true;
+                } else if (isActiveInput == 'n') {
+                    newIsActive = false;
+                } else {
+                    System.out.println("Ugyldigt input, indtast j/n");
+                }
+            } while (isActiveInput != 'j' && isActiveInput != 'n');
+
+            boolean newIsJunior = calculateIsJunior(newBirthday);
+
+            boolean newIsCompetitor = true;
+            char isCompetitorInput;
+            do {
+                System.out.println("Er medlemmet konkurrencesvømmer (j/n): ");
+                isCompetitorInput = scanner.next().charAt(0);
+
+                if (isCompetitorInput == 'j') {
+                    newIsCompetitor = true;
+                } else if (isCompetitorInput == 'n') {
+                    newIsCompetitor = false;
+                } else {
+                    System.out.println("Ugyldigt input, indtast j/n");
+                }
+            } while (isCompetitorInput != 'j' && isCompetitorInput != 'n');
+
+            scanner.nextLine(); // Clear the buffer
+
+            controller.editMember(memberName, newName, newAddress, newPhoneNumber, newMail, newBirthday, newIsActive, newIsJunior, newIsCompetitor);
+        } else {
+            System.out.println("Medlemmet med navnet '" + memberName + "' blev ikke fundet.");
+        }
+    }
+    public void deleteSwimmer() {
+        System.out.println("Indtast navnet på medlemmet, du vil slette: ");
+        String swimmerNameToDelete = scanner.nextLine();
+        controller.deleteSwimmer(swimmerNameToDelete);
     }
 
     public void calculateExpectedMembershipFeesForAll() {
         double totalExpectedFees = controller.calculateExpectedMembershipFeesForAll();
-        System.out.println("Den samlede forventede indbetaling for alle medlemmer er: " + totalExpectedFees);
+        System.out.println("Den samlede forventede indbetaling for alle medlemmer er: " + totalExpectedFees + "kr");
 
     }
 }
+
 
 
 

@@ -1,9 +1,12 @@
 package domain;
 
+import comperator.NameComperator;
 import datasource.FileHandler;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Database {
     private ArrayList<Swimmer> swimmerList;
@@ -22,8 +25,31 @@ public class Database {
         swimmerList.add(new Swimmer(name, address, phonenumber, mail, birthday, isActive, isJunior, isCompetitor));
 
     }
-    public void createSwimTime(String member, Double time, LocalDate date, Event event, Disciplin disciplin, String placement){
-        swimTimeList.add(new SwimTime(member,time, date, event, disciplin, placement));
+
+    public void createSwimTime(String member, Double time, LocalDate date, boolean competition, Disciplin disciplin, String placement) {
+        swimTimeList.add(new SwimTime(member, time, date, competition, disciplin, placement));
+    }
+
+    public void editMember(String memberName, String newName, String newAddress, String newPhonenumber, String newMail, LocalDate newBirthday, boolean newIsActive, boolean newIsJunior,boolean newIsCompetitor) {
+        ArrayList<Swimmer> searchResult = search(memberName);
+
+        if (!searchResult.isEmpty()) {
+            Swimmer swimmer = searchResult.get(0);
+
+            swimmer.setName(newName);
+            swimmer.setAddress(newAddress);
+            swimmer.setPhoneNumber(newPhonenumber);
+            swimmer.setMail(newMail);
+            swimmer.setBirthday(newBirthday);
+            swimmer.setActive(newIsActive);
+            swimmer.setJunior(newIsJunior);
+            swimmer.setCompetitor(newIsCompetitor);
+
+            System.out.println("Medlem opdateret: " + swimmer);
+        } else {
+            System.out.println("Medlem med navnet '" + memberName + "' blev ikke fundet.");
+        }
+
     }
 
 
@@ -34,10 +60,12 @@ public class Database {
     public void loadSwimmer() {
         swimmerList = filehandler.loadSwimmer();
     }
+
     public ArrayList<Swimmer> getSwimmerList() {
         return swimmerList;
     }
-    public ArrayList<SwimTime> getSwimTimelist(){
+
+    public ArrayList<SwimTime> getSwimTimelist() {
         return swimTimeList;
     }
 
@@ -64,6 +92,7 @@ public class Database {
         }
         return activeMembers;
     }
+
     public ArrayList<Swimmer> passiveMembers() {
         ArrayList<Swimmer> passiveMembers = new ArrayList<>();
         for (Swimmer swimmer : swimmerList) {
@@ -73,6 +102,7 @@ public class Database {
         }
         return passiveMembers();
     }
+
     public ArrayList<Swimmer> juniorMembers() {
         ArrayList<Swimmer> juniorMembers = new ArrayList<>();
         for (Swimmer swimmer : swimmerList) {
@@ -92,6 +122,7 @@ public class Database {
         }
         return seniorMembers;
     }
+
     public ArrayList<Swimmer> competitiveMembers() {
         ArrayList<Swimmer> competitiveMembers = new ArrayList<>();
         for (Swimmer swimmer : swimmerList) {
@@ -101,6 +132,7 @@ public class Database {
         }
         return competitiveMembers;
     }
+
     public ArrayList<Swimmer> regularMembers() {
         ArrayList<Swimmer> regularMembers = new ArrayList<>();
         for (Swimmer swimmer : swimmerList) {
@@ -110,12 +142,38 @@ public class Database {
         }
         return regularMembers;
     }
+
+    public ArrayList<Swimmer> missingPaymentMembers() {
+        ArrayList<Swimmer> missingPaymentMembers = new ArrayList<>();
+        for (Swimmer swimmer : swimmerList) {
+            if (!swimmer.getHasPaid()) {
+                missingPaymentMembers.add(swimmer);
+            }
+        }
+        return missingPaymentMembers;
+    }
+
     public void saveSwimTime() {
         filehandler2.saveSwimTime(swimTimeList);
     }
 
-    public void loadSwimmerTime() {
+    public void loadSwimTime() {
         swimTimeList = filehandler2.loadSwimTime();
+    }
+
+    public void sortSwimmers() {
+        Collections.sort(swimmerList, new NameComperator());
+    }
+    public void deleteSwimmer(String swimmerName) {
+        ArrayList<Swimmer> søgeResultat = search(swimmerName);
+
+        if (!søgeResultat.isEmpty()) {
+            Swimmer swimmer = søgeResultat.get(0);
+            swimmerList.remove(swimmer);
+            System.out.println("Svømmeren '" + swimmerName + "' er blevet slettet.");
+        } else {
+            System.out.println("Svømmeren med navnet '" + swimmerName + "' blev ikke fundet.");
+        }
     }
 
 }

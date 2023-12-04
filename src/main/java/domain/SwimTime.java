@@ -11,7 +11,7 @@ public class SwimTime {
     private Disciplin disciplin;
     private String placement;
 
-    public SwimTime(String member, double time, LocalDate date, Event event, Disciplin disciplin, String placement){
+    public SwimTime(String member, double time, LocalDate date, boolean competition, Disciplin disciplin, String placement) {
         this.time = time;
         this.member = member;
         this.date = date;
@@ -24,7 +24,8 @@ public class SwimTime {
     public double getTime() {
         return time;
     }
-    public String getMember(){
+
+    public String getMember() {
         return member;
     }
 
@@ -34,9 +35,6 @@ public class SwimTime {
 
     public LocalDate getDate() {
         return date;
-    }
-    public Event getEvent() {
-        return event;
     }
 
     public String getPlacement() {

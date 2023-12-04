@@ -25,12 +25,16 @@ public class Controller {
     }
 
     public void loadSwimTime() throws FileNotFoundException {
-        database.loadSwimmerTime();
+        database.loadSwimTime();
     }
 
     public ArrayList<Swimmer> search(String søgeord) {
         return database.search(søgeord);
 
+    }
+
+    public ArrayList allSwimmers() {
+        return database.getSwimmerList();
     }
 
     public ArrayList activeSwimmers() {
@@ -57,13 +61,17 @@ public class Controller {
         return database.regularMembers();
     }
 
+    public ArrayList missingPaymentMembers() {
+        return database.missingPaymentMembers();
+    }
+
 
     public void addSwimmer(String name, String address, String phonenumber, String mail, LocalDate birthday, boolean isActive, boolean isJunior, boolean isCompetitor) {
         database.createSwimmer(name, address, phonenumber, mail, birthday, isActive, isJunior, isCompetitor);
     }
 
-    public void addSwimTime(String member, Double time, LocalDate date, Event event, Disciplin disciplin, String placement) {
-        database.createSwimTime(member, time, date, event, disciplin, placement);
+    public void addSwimTime(String member, Double time, LocalDate date, boolean competition, Disciplin disciplin, String placement) {
+        database.createSwimTime(member, time, date, competition, disciplin, placement);
     }
 
     public double calculateExpectedMembershipFeesForAll() {
@@ -74,5 +82,15 @@ public class Controller {
         }
 
         return totalExpectedFees;
+    }
+
+    public void sortSwimmers() {
+        database.sortSwimmers();
+    }
+    public void editMember(String memberName, String newName, String newAddress, String newPhonenumber, String newMail, LocalDate newBirthday, boolean newIsActive, boolean newIsJunior,boolean newIsCompetitor){
+        database.editMember(memberName,newName, newAddress, newPhonenumber, newMail, newBirthday, newIsActive, newIsJunior, newIsCompetitor);
+    }
+    public void deleteSwimmer(String swimmerName){
+        database.deleteSwimmer(swimmerName);
     }
 }

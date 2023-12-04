@@ -1,7 +1,6 @@
 package datasource;
 
 import domain.Disciplin;
-import domain.Event;
 import domain.SwimTime;
 import domain.Swimmer;
 
@@ -30,12 +29,12 @@ public class FileHandler {
         }
         for (Swimmer swimmer : swimmerList) {
             output.println(swimmer.getName() + ";" +
-                    swimmer.getAddress() + ";"+
+                    swimmer.getAddress() + ";" +
                     swimmer.getPhoneNumber() + ";" +
                     swimmer.getMail() + ";" +
                     swimmer.getBirthday() + ";" +
-                    swimmer.getIsActive()+ ";" +
-                    swimmer.getIsJunior()+ ";" +
+                    swimmer.getIsActive() + ";" +
+                    swimmer.getIsJunior() + ";" +
                     swimmer.getIsCompetitor());
 
 
@@ -70,7 +69,6 @@ public class FileHandler {
             boolean isCompetitor = Boolean.parseBoolean(attributes[7]);
 
 
-
             Swimmer swimmer = new Swimmer(name, address, phoneNumber, mail, birthday, isActive, isJunior, isCompetitor);
             swimmerData.add(swimmer);
 
@@ -87,13 +85,13 @@ public class FileHandler {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        for (SwimTime swimtime : swimTimeList) {
-            output.println(swimtime.getMember() + ";" +
-                    swimtime.getTime() + ";"+
-                    swimtime.getDate() + ";" +
-                    swimtime.getEvent() + ";" +
-                    swimtime.getDisciplin() + ";" +
-                    swimtime.getPlacement());
+        for (SwimTime swimTime : swimTimeList) {
+            output.println(swimTime.getMember() + ";" +
+                    swimTime.getTime() + ";" +
+                    swimTime.getDate() + ";" +
+                    swimTime.getCompetition() + ";" +
+                    swimTime.getDisciplin() + ";" +
+                    swimTime.getPlacement());
 
         }
 
@@ -119,13 +117,12 @@ public class FileHandler {
             String member = attributes[0].trim();
             double time = Double.parseDouble(attributes[1]);
             LocalDate date = LocalDate.parse(attributes[2]);
-            Event event = Event.valueOf(attributes[3]);
+            boolean competition = Boolean.parseBoolean(attributes[3]);
             Disciplin disciplin = Disciplin.valueOf(attributes[4]);
-            String placement =attributes[5].trim();
+            String placement = attributes[5].trim();
 
 
-
-            SwimTime swimTime = new SwimTime(member,time, date, event, disciplin, placement);
+            SwimTime swimTime = new SwimTime(member, time, date, competition, disciplin, placement);
             swimTimeData.add(swimTime);
 
         }

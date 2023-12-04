@@ -21,13 +21,19 @@ public class Swimmer {
         this.mail = mail;
         this.birthday = birthday;
         this.isActive = isActive;
-        this.isJunior = isJunior;
+        this.isJunior = calculateIsJunior(birthday);
         this.isCompetitor = isCompetitor;
         this.kontingent = kontingent;
     }
 
     public String getName() {
         return name;
+    }
+
+    public boolean calculateIsJunior(LocalDate birthday) {
+        LocalDate currentDate = LocalDate.now();
+        int age = Period.between(birthday, currentDate).getYears();
+        return age < 18;
     }
 
     public String getAddress() {
