@@ -13,6 +13,7 @@ public class Swimmer {
     private boolean isJunior;
     private boolean isCompetitor;
     private double kontingent;
+    private boolean hasPaid;
 
     public Swimmer(String name, String address, String phonenumber, String mail, LocalDate birthday, boolean isActive, boolean isJunior, boolean isCompetitor) {
         this.name = name;
@@ -24,6 +25,7 @@ public class Swimmer {
         this.isJunior = calculateIsJunior(birthday);
         this.isCompetitor = isCompetitor;
         this.kontingent = kontingent;
+        this.hasPaid = true;
     }
 
     public String getName() {
@@ -66,6 +68,10 @@ public class Swimmer {
 
     public double getKontingent() {
         return kontingent;
+    }
+
+    public boolean getHasPaid() {
+        return hasPaid;
     }
 
 
