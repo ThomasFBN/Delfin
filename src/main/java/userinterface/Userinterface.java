@@ -194,7 +194,7 @@ public class Userinterface {
         } while (medlem != 'j' && medlem != 'n');
 
 
-        controller.addSwimmer(name, address, phonenumber, mail, birthday, isActive, isJunior, isCompetitor);
+        controller.addSwimmer(name, address, phonenumber, mail, birthday, isActive, isCompetitor);
     }
 
     public void createSwimTime() {

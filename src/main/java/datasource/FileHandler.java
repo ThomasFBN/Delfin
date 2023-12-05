@@ -65,8 +65,7 @@ public class FileHandler {
             String mail = attributes[3];
             LocalDate birthday = LocalDate.parse(attributes[4]);
             boolean isActive = Boolean.parseBoolean(attributes[5]);
-            boolean isJunior = Boolean.parseBoolean(attributes[6]);
-            boolean isCompetitor = Boolean.parseBoolean(attributes[7]);
+            boolean isCompetitor = Boolean.parseBoolean(attributes[6]);
 
 
             Swimmer swimmer = new Swimmer(name, address, phoneNumber, mail, birthday, isActive, isCompetitor);

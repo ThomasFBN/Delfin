@@ -20,8 +20,8 @@ public class Database {
         disciplinList = new ArrayList<>();
     }
 
-    public void createSwimmer(String name, String address, String phonenumber, String mail, LocalDate birthday, boolean isActive, boolean isJunior, boolean isCompetitor) {
-        swimmerList.add(new Swimmer(name, address, phonenumber, mail, birthday, isActive, isJunior, isCompetitor));
+    public void createSwimmer(String name, String address, String phonenumber, String mail, LocalDate birthday, boolean isActive, boolean isCompetitor) {
+        swimmerList.add(new Swimmer(name, address, phonenumber, mail, birthday, isActive, isCompetitor));
 
     }
 
