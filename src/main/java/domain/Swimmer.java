@@ -15,7 +15,7 @@ public class Swimmer {
     private double kontingent;
     private boolean hasPaid;
 
-    public Swimmer(String name, String address, String phonenumber, String mail, LocalDate birthday, boolean isActive, boolean isJunior, boolean isCompetitor) {
+    public Swimmer(String name, String address, String phonenumber, String mail, LocalDate birthday, boolean isActive, boolean isCompetitor) {
         this.name = name;
         this.address = address;
         this.phoneNumber = phonenumber;

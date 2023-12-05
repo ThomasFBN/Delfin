@@ -23,60 +23,129 @@ public class Userinterface {
         controller.loadSwimTime();
         int menuValg = 0;
 
-        while (menuValg != 10) {
-            System.out.println("Velkommen til svømmeklubben Delfinen!" +
-                    "\nTast 1 for at oprette et medlem til klubben" +
-                    "\nTast 2 for at søge efter et medlem i klubben." +
-                    "\nTast 3 for at se oversigt over medlemmere." +
-                    "\nTast 4 for at oprette nye træning/konkurrence resultater" +
-                    "\nTast 5 for at få oversigt over top 5 svømmere i hver svømmedisciplin." +
-                    "\nTast 6 for at få oversigt over forventede indbetalte kontigenter på et år." +
-                    "\nTast 7 for at få oversigt over manglende betalinger til kontigenter." +
-                    "\nTast 8 for at få udmelde et given medlem." +
-                    "\nTast 9 for at rette i et given medlems informationer." +
-                    "\nTast 10 for at afslutte");
 
-            menuValg = scanner.nextInt();
+        while (menuValg != 10) {
+            System.out.println("Vælg din rolle: " +
+                    "\n1. Formand" +
+                    "\n2. Kasserer" +
+                    "\n3. Træner" +
+                    "\n4. Afslut");
+
+            int roleChoice = scanner.nextInt();
             scanner.nextLine();
 
-            switch (menuValg) {
-                case 1: {
-                    createSwimmer();
+            switch (roleChoice) {
+                case 1:
+                    handleChairmanOptions();
                     break;
-                }
-                case 2: {
-                    searchForSwimmer();
-
+                case 2:
+                    handleTreasurerOptions();
                     break;
-                }
-                case 3: {
-                    handleSwimmerCategory();
+                case 3:
+                    handleCoachOptions();
                     break;
-                }
-                case 4: {
-                    createSwimTime();
-                    break;
-                }
-                case 6: {
-                    calculateExpectedMembershipFeesForAll();
-                    break;
-                }
-                case 8:{
-                    deleteSwimmer();
-                    break;
-                }
-                case 9: {
-                    editMember();
-                    break;
-                }
-                case 10: {
+                case 4:
                     saveSwimmer();
                     saveSwimTime();
                     System.out.println("System exit");
-                }
-                default: {
+                    menuValg = 10;
+                    break;
+                default:
+                    System.out.println("Ugyldigt valg.");
+                    break;
+            }
+        }
+    }
 
-                }
+    public void handleChairmanOptions() {
+        int chairmanChoice = 0;
+        while (chairmanChoice != 6) {
+            System.out.println("Formand valgmuligheder: " +
+                    "\n1. Opret et medlem til klubben" +
+                    "\n2. Søg efter et medlem i klubben" +
+                    "\n3. Se oversigt over medlemmere" +
+                    "\n4. Udmeld et medlem" +
+                    "\n5. Rediger medlems informationer" +
+                    "\n6. Tilbage til hovedmenuen");
+
+            chairmanChoice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (chairmanChoice) {
+                case 1:
+                    createSwimmer();
+                    break;
+                case 2:
+                    searchForSwimmer();
+                    break;
+                case 3:
+                    handleSwimmerCategory();
+                    break;
+                case 4:
+                    deleteSwimmer();
+                    break;
+                case 5:
+                    editMember();
+                    break;
+                case 6:
+                    break;
+                default:
+                    System.out.println("Ugyldigt valg.");
+                    break;
+            }
+        }
+    }
+
+    public void handleTreasurerOptions() {
+        int treasurerChoice = 0;
+        while (treasurerChoice != 3) {
+            System.out.println("Kasserer valgmuligheder: " +
+                    "\n1. Oversigt over forventede indbetalte kontingenter på et år" +
+                    "\n2. Oversigt over manglende betalinger til kontingenter" +
+                    "\n3. Tilbage til hovedmenuen");
+
+            treasurerChoice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (treasurerChoice) {
+                case 1:
+                    calculateExpectedMembershipFeesForAll();
+                    break;
+                case 2:
+                    missingPaymentMembers();
+                    break;
+                case 3:
+                    break;
+                default:
+                    System.out.println("Ugyldigt valg.");
+                    break;
+            }
+        }
+    }
+
+    public void handleCoachOptions() {
+        int coachChoice = 0;
+        while (coachChoice != 3) {
+            System.out.println("Træner valgmuligheder: " +
+                    "\n1. Opret nye trænings-/konkurrenceresultater" +
+                    "\n2. Se medlemmere på hvert hold" +
+                    "\n3 Tilbage til hovedmenuen");
+
+            coachChoice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (coachChoice) {
+                case 1:
+                    createSwimTime();
+                    break;
+                case 2:
+                    handleSwimmerCategory();
+                    break;
+                case 3:
+                    break;
+                default:
+                    System.out.println("Ugyldigt valg.");
+                    break;
             }
         }
     }
@@ -440,7 +509,7 @@ public class Userinterface {
                 }
             } while (isCompetitorInput != 'j' && isCompetitorInput != 'n');
 
-            scanner.nextLine(); // Clear the buffer
+            scanner.nextLine();
 
             controller.editMember(memberName, newName, newAddress, newPhoneNumber, newMail, newBirthday, newIsActive, newIsJunior, newIsCompetitor);
         } else {
@@ -452,6 +521,8 @@ public class Userinterface {
         String swimmerNameToDelete = scanner.nextLine();
         controller.deleteSwimmer(swimmerNameToDelete);
     }
+
+
 
     public void calculateExpectedMembershipFeesForAll() {
         double totalExpectedFees = controller.calculateExpectedMembershipFeesForAll();

@@ -66,8 +66,8 @@ public class Controller {
     }
 
 
-    public void addSwimmer(String name, String address, String phonenumber, String mail, LocalDate birthday, boolean isActive, boolean isJunior, boolean isCompetitor) {
-        database.createSwimmer(name, address, phonenumber, mail, birthday, isActive, isJunior, isCompetitor);
+    public void addSwimmer(String name, String address, String phonenumber, String mail, LocalDate birthday, boolean isActive, boolean isCompetitor) {
+        database.createSwimmer(name, address, phonenumber, mail, birthday, isActive, isCompetitor);
     }
 
     public void addSwimTime(String member, Double time, LocalDate date, boolean competition, Disciplin disciplin, String placement) {

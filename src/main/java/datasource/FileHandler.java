@@ -41,7 +41,7 @@ public class FileHandler {
         }
 
 
-        System.out.println("List saved");
+        System.out.println("Medlemmere gemt");
     }
 
     public ArrayList<Swimmer> loadSwimmer() {
@@ -69,7 +69,7 @@ public class FileHandler {
             boolean isCompetitor = Boolean.parseBoolean(attributes[7]);
 
 
-            Swimmer swimmer = new Swimmer(name, address, phoneNumber, mail, birthday, isActive, isJunior, isCompetitor);
+            Swimmer swimmer = new Swimmer(name, address, phoneNumber, mail, birthday, isActive, isCompetitor);
             swimmerData.add(swimmer);
 
         }
@@ -96,7 +96,7 @@ public class FileHandler {
         }
 
 
-        System.out.println("List saved");
+        System.out.println("Tider gemt");
     }
 
     public ArrayList<SwimTime> loadSwimTime() {
