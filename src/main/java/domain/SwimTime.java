@@ -50,11 +50,12 @@ public class SwimTime {
 
     @Override
     public String toString() {
-        return "-------------------------------------------------\n"+"Medlem:" + "\n" +
+        return "-------------------------------------------------\n"+
+                "Medlem:" + "\n" +
                 "Medlemmets navn: " + member + "\n" +
                 "Medlemmets tid: " + time + " min " + "\n" +
                 "Dato: " + date + "\n" +
-                "Konkurrence/trænning: " + competition + "\n" +
+                "Konkurrence: " + competition + "\n" +
                 "Disciplin : " + disciplin + "\n" +
                 "Placering: " + placement;
 

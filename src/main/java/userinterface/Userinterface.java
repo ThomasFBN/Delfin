@@ -99,11 +99,12 @@ public class Userinterface {
 
     public void handleTreasurerOptions() {
         int treasurerChoice = 0;
-        while (treasurerChoice != 3) {
+        while (treasurerChoice != 4) {
             System.out.println("Kasserer valgmuligheder: " +
                     "\n1. Oversigt over forventede indbetalte kontingenter på et år" +
-                    "\n2. Oversigt over manglende betalinger til kontingenter" +
-                    "\n3. Tilbage til hovedmenuen");
+                    "\n2. Ret betalings status på et given medlem" +
+                    "\n3. Oversigt over manglende betalinger til kontingenter" +
+                    "\n4. Tilbage til hovedmenuen");
 
             treasurerChoice = scanner.nextInt();
             scanner.nextLine();
@@ -113,6 +114,9 @@ public class Userinterface {
                     calculateExpectedMembershipFeesForAll();
                     break;
                 case 2:
+                    changePaymentStatus();
+                    break;
+                case 3:
                     missingPaymentMembers();
                     break;
                 case 3:
@@ -161,8 +165,7 @@ public class Userinterface {
         String name = scanner.nextLine();
         System.out.println("Indtast adressen");
         String address = scanner.nextLine();
-        System.out.println("Indtast telefon nummer");
-        String phonenumber = scanner.nextLine();
+        String phonenumber = getNumericInput(scanner);
         System.out.println("Indtast mail");
         String mail = scanner.nextLine();
         System.out.println("Indtast fødselsdagdato i formatet DD-MM-ÅÅÅÅ:");
@@ -201,6 +204,26 @@ public class Userinterface {
 
 
         controller.addSwimmer(name, address, phonenumber, mail, birthday, isActive, isCompetitor);
+    }
+
+    public String getNumericInput(Scanner scanner) {
+        String input;
+        boolean isValid = false;
+
+        do {
+            System.out.println("Indtast telefonnummer:");
+
+            input = scanner.nextLine();
+
+            // Tjekker om inputtet kun indeholder tal
+            if (input.matches("[0-9]+")) {
+                isValid = true;
+            } else {
+                System.out.println("Ugyldigt input. Indtast kun tal.");
+            }
+        } while (!isValid);
+
+        return input;
     }
 
     public void createSwimTime() {
@@ -542,7 +565,7 @@ public class Userinterface {
     public void displayTop5Swimmers(ArrayList<ArrayList<SwimTime>> top5Swimmers) {
         for (int i = 0; i < top5Swimmers.size(); i++) {
             Disciplin disciplin = Disciplin.values()[i];
-            System.out.println("-------------------------------------------------\n" +
+            System.out.println("-------------------------------------------------\nn" +
                     "Top 5 svømmere i disciplinen " + disciplin + ":");
             for (SwimTime swimTime : top5Swimmers.get(i)) {
                 System.out.println(swimTime);
@@ -550,6 +573,37 @@ public class Userinterface {
         }
     }
 
+    public void changePaymentStatus() {
+        System.out.println("Indtast navnet på medlemmet, du vil redigere: ");
+        String memberName = scanner.nextLine();
+        ArrayList<Swimmer> searchResult = controller.search(memberName);
+
+        if (!searchResult.isEmpty()) {
+            Swimmer swimmer = searchResult.get(0);
+
+            System.out.println("Medlem fundet:");
+            System.out.println(swimmer);
+            System.out.println("Indtast nye oplysninger for medlemmet:");
+
+            boolean newHasPaid = true;
+            char hasPaidInput;
+            do {
+                System.out.println("Har medlemmet betalt (j/n): ");
+                hasPaidInput = scanner.next().charAt(0);
+
+                if (hasPaidInput == 'j') {
+                    newHasPaid = true;
+                } else if (hasPaidInput == 'n') {
+                    newHasPaid = false;
+                } else {
+                    System.out.println("Ugyldigt input, indtast j/n");
+                }
+            } while (hasPaidInput != 'j' && hasPaidInput != 'n');
+
+            controller.ChangePaymentStatus(memberName,newHasPaid);
+
+        }
+    }
 }
 
 
