@@ -6,6 +6,7 @@ import datasource.FileHandler;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class Database {
     private ArrayList<Swimmer> swimmerList;
@@ -29,7 +30,7 @@ public class Database {
         swimTimeList.add(new SwimTime(member, time, date, competition, disciplin, placement));
     }
 
-    public void editMember(String memberName, String newName, String newAddress, String newPhonenumber, String newMail, LocalDate newBirthday, boolean newIsActive, boolean newIsJunior,boolean newIsCompetitor) {
+    public void editMember(String memberName, String newName, String newAddress, String newPhonenumber, String newMail, LocalDate newBirthday, boolean newIsActive, boolean newIsJunior, boolean newIsCompetitor) {
         ArrayList<Swimmer> searchResult = search(memberName);
 
         if (!searchResult.isEmpty()) {
@@ -163,6 +164,7 @@ public class Database {
     public void sortSwimmers() {
         Collections.sort(swimmerList, new NameComperator());
     }
+
     public void deleteSwimmer(String swimmerName) {
         ArrayList<Swimmer> søgeResultat = search(swimmerName);
 
@@ -175,6 +177,36 @@ public class Database {
         }
     }
 
+    public ArrayList<ArrayList<SwimTime>> getTop5SwimmersPerDiscipline() {
+        ArrayList<ArrayList<SwimTime>> top5Swimmers = new ArrayList<>();
+
+        for (Disciplin disciplin : Disciplin.values()) {
+            ArrayList<SwimTime> swimTimesForDiscipline = new ArrayList<>();
+
+            for (SwimTime swimTime : swimTimeList) {
+                if (swimTime.getDisciplin() == disciplin) {
+                    swimTimesForDiscipline.add(swimTime);
+                }
+            }
+
+            swimTimesForDiscipline.sort(Comparator.comparingDouble(SwimTime::getTime));
+
+            ArrayList<SwimTime> top5 = new ArrayList<>();
+            int count = 0;
+            for (SwimTime swimTime : swimTimesForDiscipline) {
+                if (count < 5) {
+                    top5.add(swimTime);
+                    count++;
+                } else {
+                    break;
+                }
+            }
+
+            top5Swimmers.add(top5);
+        }
+
+        return top5Swimmers;
+    }
 }
 
 

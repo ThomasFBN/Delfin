@@ -2,6 +2,7 @@ package userinterface;
 
 import domain.Controller;
 import domain.Disciplin;
+import domain.SwimTime;
 import domain.Swimmer;
 
 import java.io.FileNotFoundException;
@@ -125,11 +126,12 @@ public class Userinterface {
 
     public void handleCoachOptions() {
         int coachChoice = 0;
-        while (coachChoice != 3) {
+        while (coachChoice != 4) {
             System.out.println("Træner valgmuligheder: " +
                     "\n1. Opret nye trænings-/konkurrenceresultater" +
                     "\n2. Se medlemmere på hvert hold" +
-                    "\n3 Tilbage til hovedmenuen");
+                    "\n3. Se top 5 svømmere inde for hver disciplin " +
+                    "\n4 Tilbage til hovedmenuen");
 
             coachChoice = scanner.nextInt();
             scanner.nextLine();
@@ -142,6 +144,10 @@ public class Userinterface {
                     handleSwimmerCategory();
                     break;
                 case 3:
+                    ArrayList<ArrayList<SwimTime>> top5Swimmers = getTop5SwimmersPerDiscipline();
+                    displayTop5Swimmers(top5Swimmers);
+                    break;
+                case 4:
                     break;
                 default:
                     System.out.println("Ugyldigt valg.");
@@ -454,6 +460,7 @@ public class Userinterface {
         } while (!validDiscipline);
         return selectedDiscipline;
     }
+
     public void editMember() {
         System.out.println("Indtast navnet på medlemmet, du vil redigere: ");
         String memberName = scanner.nextLine();
@@ -516,6 +523,7 @@ public class Userinterface {
             System.out.println("Medlemmet med navnet '" + memberName + "' blev ikke fundet.");
         }
     }
+
     public void deleteSwimmer() {
         System.out.println("Indtast navnet på medlemmet, du vil slette: ");
         String swimmerNameToDelete = scanner.nextLine();
@@ -523,14 +531,25 @@ public class Userinterface {
     }
 
 
-
     public void calculateExpectedMembershipFeesForAll() {
         double totalExpectedFees = controller.calculateExpectedMembershipFeesForAll();
         System.out.println("Den samlede forventede indbetaling for alle medlemmer er: " + totalExpectedFees + "kr");
 
     }
+    public ArrayList getTop5SwimmersPerDiscipline(){
+        return controller.getTop5SwimmersPerDiscipline();
+    }
+    public void displayTop5Swimmers(ArrayList<ArrayList<SwimTime>> top5Swimmers) {
+        for (int i = 0; i < top5Swimmers.size(); i++) {
+            Disciplin disciplin = Disciplin.values()[i];
+            System.out.println("-------------------------------------------------\n" +
+                    "Top 5 svømmere i disciplinen " + disciplin + ":");
+            for (SwimTime swimTime : top5Swimmers.get(i)) {
+                System.out.println(swimTime);
+            }
+        }
+    }
+
 }
-
-
 
 

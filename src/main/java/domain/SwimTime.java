@@ -47,4 +47,16 @@ public class SwimTime {
     public boolean getCompetition() {
         return competition;
     }
+
+    @Override
+    public String toString() {
+        return "-------------------------------------------------\n"+"Medlem:" + "\n" +
+                "Medlemmets navn: " + member + "\n" +
+                "Medlemmets tid: " + time + " min " + "\n" +
+                "Dato: " + date + "\n" +
+                "Konkurrence/trænning: " + competition + "\n" +
+                "Disciplin : " + disciplin + "\n" +
+                "Placering: " + placement;
+
+    }
 }
