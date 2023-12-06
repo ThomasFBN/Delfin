@@ -93,4 +93,7 @@ public class Controller {
     public void deleteSwimmer(String swimmerName){
         database.deleteSwimmer(swimmerName);
     }
+    public ArrayList getTop5SwimmersPerDiscipline(){
+        return database.getTop5SwimmersPerDiscipline();
+    }
 }
