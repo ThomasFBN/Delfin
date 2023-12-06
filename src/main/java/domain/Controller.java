@@ -96,4 +96,7 @@ public class Controller {
     public ArrayList getTop5SwimmersPerDiscipline(){
         return database.getTop5SwimmersPerDiscipline();
     }
+    public void ChangePaymentStatus(String memberName, boolean newHasPaid){
+        database.ChangePaymentStatus(memberName, newHasPaid);
+    }
 }

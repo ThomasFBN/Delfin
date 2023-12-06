@@ -143,6 +143,22 @@ public class Database {
         return regularMembers;
     }
 
+    public void ChangePaymentStatus(String memberName,boolean newHasPaid){
+        ArrayList<Swimmer> searchResult = search(memberName);
+
+        if (!searchResult.isEmpty()) {
+            Swimmer swimmer = searchResult.get(0);
+
+           swimmer.setHasPaid(newHasPaid);
+
+            System.out.println("Medlem opdateret: " + swimmer);
+        } else {
+            System.out.println("Medlem med navnet '" + memberName + "' blev ikke fundet.");
+        }
+
+    }
+
+
     public ArrayList<Swimmer> missingPaymentMembers() {
         ArrayList<Swimmer> missingPaymentMembers = new ArrayList<>();
         for (Swimmer swimmer : swimmerList) {

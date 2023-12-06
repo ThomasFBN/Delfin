@@ -119,7 +119,7 @@ public class Userinterface {
                 case 3:
                     missingPaymentMembers();
                     break;
-                case 3:
+                case 4:
                     break;
                 default:
                     System.out.println("Ugyldigt valg.");
@@ -559,9 +559,11 @@ public class Userinterface {
         System.out.println("Den samlede forventede indbetaling for alle medlemmer er: " + totalExpectedFees + "kr");
 
     }
-    public ArrayList getTop5SwimmersPerDiscipline(){
+
+    public ArrayList getTop5SwimmersPerDiscipline() {
         return controller.getTop5SwimmersPerDiscipline();
     }
+
     public void displayTop5Swimmers(ArrayList<ArrayList<SwimTime>> top5Swimmers) {
         for (int i = 0; i < top5Swimmers.size(); i++) {
             Disciplin disciplin = Disciplin.values()[i];
