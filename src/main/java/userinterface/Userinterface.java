@@ -227,8 +227,17 @@ public class Userinterface {
     }
 
     public void createSwimTime() {
-        System.out.println("Indtast medlemmet: ");
-        String member = scanner.nextLine();
+
+        System.out.println("Indtast navnet på medlemmet, du vil oprette en tid til: ");
+        String swimmerName = scanner.nextLine();
+        ArrayList<Swimmer> søgeResultat = controller.search(swimmerName);
+
+        if (søgeResultat != null) {
+            System.out.println("medlemmet fundet:");
+            System.out.println(søgeResultat);
+        } else {
+            System.out.println("Medlemmet med navnet '" + swimmerName + "' blev ikke fundet.");
+        }
         System.out.println("Indtast medlemmets tid: ");
         double time = scanner.nextDouble();
         scanner.nextLine();
@@ -254,7 +263,7 @@ public class Userinterface {
         System.out.println("Indtast placering");
         String placement = scanner.nextLine();
 
-        controller.addSwimTime(member, time, date, competition, disciplin, placement);
+        controller.addSwimTime(swimmerName, time, date, competition, disciplin, placement);
 
 
     }
@@ -473,6 +482,7 @@ public class Userinterface {
         boolean validDiscipline = false;
         do {
             System.out.println("Indtast disciplin:");
+            System.out.println("Følgnede discipliner kan vælges:\nCrawl100m, Bryst100m, Rygcrawl100M,Butterfly100M");
             String disciplineInput = scanner.nextLine();
             try {
                 selectedDiscipline = Disciplin.valueOf(disciplineInput.toUpperCase());

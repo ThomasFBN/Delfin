@@ -118,11 +118,11 @@ public class Swimmer {
     public String toString() {
         return "-------------------------------------------------\n"+
                 "Medlem: " + "\n" +
-                "Medlemmets navn: " + name + "\n" +
-                "Medlemmets addresse: " + address + "\n" +
-                "Medlemmets telefon nummer: " + phoneNumber + "\n" +
-                "Medlemmets mail: " + mail + "\n" +
-                "Medlemmets fødselsdagsdato: " + birthday + "\n" +
+                "Navn: " + name + "\n" +
+                "Addresse: " + address + "\n" +
+                "Telefon nummer: " + phoneNumber + "\n" +
+                "Mail: " + mail + "\n" +
+                "Fødselsdagsdato: " + birthday + "\n" +
                 "Er medlemmet aktivt: " + isActive + "\n" +
                 "Er medlemmet junior svømmer: " + isJunior + "\n" +
                 "Er medlemmet konkurrence svømmer: " + isCompetitor;

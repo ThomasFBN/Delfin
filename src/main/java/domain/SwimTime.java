@@ -52,8 +52,8 @@ public class SwimTime {
     public String toString() {
         return "-------------------------------------------------\n"+
                 "Medlem:" + "\n" +
-                "Medlemmets navn: " + member + "\n" +
-                "Medlemmets tid: " + time + " min " + "\n" +
+                "Navn: " + member + "\n" +
+                "Tid: " + time + " min " + "\n" +
                 "Dato: " + date + "\n" +
                 "Konkurrence: " + competition + "\n" +
                 "Disciplin : " + disciplin + "\n" +
